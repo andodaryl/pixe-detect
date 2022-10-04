@@ -10,10 +10,10 @@ global databaseName := "data"
 
 if ( !FileExist(databaseName) ) {
 
-  IniWrite, ini=true, %databaseName%, meta
+  IniWrite, ini=1, %databaseName%, meta
 
-} else if ( dbGet("ini", "meta") != true ) {
+} else if ( dbGet("ini", "meta") != 1 ) {
 
-  IniWrite, ini=true, %databaseName%, meta
+  IniWrite, ini=1, %databaseName%, meta
   
 }

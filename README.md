@@ -1,2 +1,13 @@
 # pixe-detect
-Detect pixel in designated visual area and trigger action
+
+detect pixel in designated visual area and trigger action
+
+## features
+
+- database
+- user input
+- loop search
+
+## resources
+
+- [AHK2 Docs](https://lexikos.github.io/v2/docs/AutoHotkey)

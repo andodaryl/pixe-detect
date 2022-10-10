@@ -57,3 +57,15 @@ hotkey(key, func) {
 quit() {
   exitapp
 }
+
+strJoin(array, separator := ", ") {
+
+  string := ""
+
+  for _, value in array {
+    string .= separator . value
+  }
+
+  return trim(string, separator)
+
+}

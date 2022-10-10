@@ -6,7 +6,7 @@ AHK v2.0-beta.11
 DATABASE
 */
 
-databaseName := "data.ini"
+dbFile := "data.ini"
 
 /*
 HOTKEYS

@@ -10,9 +10,11 @@ UI Object
 
 mainUI() {
 
+  ; Characteristics
+
   self := gui(,, mainUI_eventHandler)
-  self.Opt("-MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption")
-  self.Move(x:=vw(65), y:=vh(10), width:=335, height:=302)
+  opt := "-MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption"
+  dim := { x: vw(65), y: vh(10), w: 335, h: 302 }
 
   ; Controls
 
@@ -34,6 +36,12 @@ mainUI() {
   text_SearchP2 := self.AddText("x24 y205 w280 h23", "Search Point 2 [ HOTKEY ]")
 
   self.OnEvent("Escape", self.destroy)
+
+  ; Instantiation
+
+  self.Opt(opt)
+  self.Show("hide")
+  self.Move(dim.x, dim.y, dim.w, dim.h)
 
   return self 
 

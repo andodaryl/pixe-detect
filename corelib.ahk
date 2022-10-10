@@ -6,7 +6,7 @@ AHK v2.0-beta.11
 DATABASE
 */
 
-databaseName := "data.ini"
+dbFile := "data.ini"
 
 /*
 HOTKEYS
@@ -56,4 +56,16 @@ hotkey(key, func) {
 
 quit() {
   exitapp
+}
+
+strJoin(array, separator := ", ") {
+
+  string := ""
+
+  for _, value in array {
+    string .= separator . value
+  }
+
+  return trim(string, separator)
+
 }

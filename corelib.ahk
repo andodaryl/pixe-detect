@@ -3,10 +3,16 @@ AHK v2.0-beta.11
 */
 
 /*
+DATABASE
+*/
+
+databaseName := "data.ini"
+
+/*
 HOTKEYS
 */
 
-global hkQuit := "Esc"
+hkQuit := "Esc"
 
 /*
 DIMENSIONS

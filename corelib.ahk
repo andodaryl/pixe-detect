@@ -6,7 +6,33 @@ AHK v2.0-beta.11
 DATABASE
 */
 
-dbFile := "data.ini"
+
+class Section_Entry {
+
+  __isProp(x) {
+    return x ~= "^_.*_$" ;; starts and ends w underscore e.g. "_sample_"
+  }
+
+  __New(sectionName, fileName := "data.ini") {
+    this._file_ := fileName
+    this._name_ := sectionName 
+  }
+
+  __Get(keyName, params_array) {
+
+    ;; if property then get from object instance otherwise get from ini file
+    return this.__isProp(keyName) ? this.GetOwnPropDesc(keyName).Value : iniread(this._file_, this._name_, keyName)
+
+  }
+
+  __Set(keyName, params_array, value) {
+
+    ;; if property then set new pair in object instance otherwise in ini file
+    this.__isProp(keyName) ? this.defineprop(keyName, { Value : value }) : iniwrite(value, this._file_, this._name_, keyName)
+
+  }
+
+}
 
 /*
 HOTKEYS

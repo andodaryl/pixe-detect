@@ -139,3 +139,18 @@ parseIniObj(file) {
   return ini_obj
 
 }
+
+indexOf(array, targetValue) {
+
+  indexFound := 0 ;; i.e. not in array
+
+  for index, value in array {
+    if (value == targetValue) {
+      indexFound := index
+      break
+    }
+  }
+
+  return indexFound
+
+}

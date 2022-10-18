@@ -26,7 +26,7 @@ class Section_Entry {
   __Get(keyName, params_array) {
 
     ;; if property then get from object instance otherwise get from ini file
-    return this.__isProp(keyName) ? this.GetOwnPropDesc(keyName).Value : iniread(this._file_, this._name_, keyName)
+    return this.__isProp(keyName) ? this.GetOwnPropDesc(keyName).Value : iniread(this._file_, this._name_, keyName, _null_)
 
   }
 

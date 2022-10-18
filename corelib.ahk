@@ -3,9 +3,14 @@ AHK v2.0-beta.11
 */
 
 /*
-DATABASE
+CONSTANTS
 */
 
+_null_ := "null"
+
+/*
+DATABASE
+*/
 
 class Section_Entry {
 

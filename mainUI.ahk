@@ -144,15 +144,48 @@ mainUI() {
 
     }
 
+    ; Search Points - Constructor
+    _searchPoints(targetGui) {
+
+      ;; Constructors
+      _point1(targetGui) {
+        _button := targetGui.AddButton("x16 y59 w155 h22", "Search Area Point 1")
+        _edit := targetGui.AddEdit("x189 y59 w120 h21 +ReadOnly")
+        return _edit
+      }
+      _point2(targetGui) {
+        _button := targetGui.AddButton("x16 y99 w155 h23", "Search Area Point 2")
+        _edit := targetGui.AddEdit("x189 y100 w120 h21 +ReadOnly")
+        return _edit
+      }
+
+      ;; Instances
+      point1 := _point1(targetGui)
+      point2 := _point2(targetGui)
+
+      ;; Methods
+      update(_closureFix_, COORD1, COORD2) {
+        point1.Text := getCoordString(COORD1)
+        point2.Text := getCoordString(COORD2)
+      }
+
+      getCoordString(COORD) {
+        if(COORD.X && COORD.Y) {
+          return "(" . COORD.X . "," . COORD.Y . ")"
+        }
+      }
+      
+      API := {  update : update
+      }
+
+      return API
+    }
+
     ; Color List - Instance
     colorList := _colorList(self)
 
-    ; Search Points
-    button_SearchP1 := self.AddButton("x16 y59 w155 h22", "Search Area Point 1")
-    edit_SearchP1 := self.AddEdit("x189 y59 w120 h21 +ReadOnly")
-
-    button_SearchP2 := self.AddButton("x16 y99 w155 h23", "Search Area Point 2")
-    edit_SearchP2 := self.AddEdit("x189 y100 w120 h21 +ReadOnly")
+    ; Search Points - Instance
+    searchPoints := _searchPoints(self)
 
     ; Hotkey Group
     group_Hotkey := self.AddGroupBox("x15 y138 w304 h142 +Left", "HOTKEYS")

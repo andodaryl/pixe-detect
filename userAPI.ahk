@@ -6,4 +6,4 @@ AHK v2.0-beta.11
 #include ./mainUI.ahk
 
 UI := mainUI()
-UI.show()
+UI.window.show()

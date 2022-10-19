@@ -12,9 +12,9 @@ mainUI() {
 
   ; Characteristics
 
-  self := gui()
-  opt := "-MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption"
-  dim := { x: vw(65), y: vh(10), w: 335, h: 302 }
+    self := gui()
+    opt := "-MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption"
+    dim := { x: vw(65), y: vh(10), w: 335, h: 302 }
 
   ; Controls
 
@@ -97,7 +97,8 @@ mainUI() {
 
       getDisabledItemsArray() {
         isEmpty := storeData.disabledItems == _null_ || storeData.disabledItems == ""
-        return isEmpty ? defaultData.disabledItems : strSplit(storeData.disabledItems, ", ")
+
+        return isEmpty ? defaultData.disabledItems.clone() : strSplit(storeData.disabledItems, ", ")
         
       }
 

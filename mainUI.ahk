@@ -19,8 +19,133 @@ mainUI() {
   ; Controls
 
     ; Color List
-    dlist_ColorList := self.AddDDL("vColorChoice Choose1 x17 y19 w155 h22", ["Color List"])
-    check_Disable := self.AddCheckBox("x189 y20 w57 h18 Disabled", "Disable")
+    colorList(targetGui) {
+
+      storeData := Section_Entry("colorList")
+
+      defaultData := { itemList : ["—— ( Please add a color ) ——"]
+      , disabledItems : []
+      , _list : { options : "x17 y19 w155 h22 R3 Choose1" }
+      , _box : { options : "x189 y20 w90 h18", text : "Color Disabled"}
+      }
+
+      ;; create controls using default data & initialise w stored data
+      _list := targetGui.AddDDL(defaultData._list.options, defaultData.itemList)
+      _box := targetGui.AddCheckBox(defaultData._box.options, defaultData._box.text)
+      update()
+
+      ;; event handling
+      _list.OnEvent("Change", syncBoxState)
+      _box.OnEvent("Click", storeItemState)
+
+      ;; methods
+      syncBoxState(*) {
+        if (_list.Text != getEmptyMessage()) {
+          _box.Enabled := true
+          isItemEnabled(_list.Text) ? _box.Value := 0 : _box.Value := 1
+        } else {
+          _box.Enabled := false
+        }
+      } 
+
+      storeItemState(*) {
+        switch(_box.Value) {
+          case -1: ;; early exit when control is disabled
+            return 
+          case 0: ;; item should be tagged as enabled
+            enableItem(_list.Text)
+            return
+          case 1: ;;; item should be tagged as disabled
+            disableItem(_list.Text)
+            return
+          default:
+            throw Error("Invalid value")
+        }
+      }
+
+      update(*) {
+
+        ;; re-create list using storeData
+        list_array := getItemListArray()
+        _list.Delete() ; clear list
+        _list.Add(list_array) ; add itemList found or default []
+        _list.Choose(1)
+
+        syncBoxState()
+
+      }
+
+      getEmptyMessage() {
+        return emptyMessage := defaultData.itemList[1]
+      }
+
+      getItemListArray(noTitle := false) {
+
+        isEmpty := storeData.itemList == _null_ || storeData.itemList == ""
+        list_array := isEmpty ? defaultData.itemList : strSplit(storeData.itemList, ", ")
+
+        if (noTitle) {
+          indexFound := indexOf(list_array, getEmptyMessage())
+          if (indexFound) {
+            list_array.removeAt(indexFound)
+          }
+        }
+
+        return list_array
+
+      }
+
+      getDisabledItemsArray() {
+        isEmpty := storeData.disabledItems == _null_ || storeData.disabledItems == ""
+        return isEmpty ? defaultData.disabledItems : strSplit(storeData.disabledItems, ", ")
+        
+      }
+
+      isItemEnabled(itemText) {
+        list_array := getDisabledItemsArray()
+        return indexOf(list_array, itemText) == 0
+      }
+
+      enableItem(itemText) {
+        if (!isItemEnabled(itemText) && itemText != getEmptyMessage()) {
+          list_array := getDisabledItemsArray()
+          list_array.removeAt(indexOf(list_array, itemText))
+          list_string := strJoin(list_array, ", ")
+          storeData.disabledItems := list_string
+        }
+      }
+
+      disableItem(itemText) {
+        if (isItemEnabled(itemText && itemText != getEmptyMessage())) {
+          list_array := getDisabledItemsArray()
+          list_array.Push(itemText)
+          list_string := strJoin(list_array, ", ")
+          storeData.disabledItems := list_string
+        }
+      }
+
+      addColor(_closureFix_, color) {
+
+        list_array := getItemListArray(noTitle := true)
+
+        if (indexOf(list_array, color) == 0) {
+          list_array.Push(color)
+          list_string := strJoin(list_array, ", ")
+          storeData.itemList := list_string
+        }
+
+      }
+
+      API := { update : update
+      , addColor : addColor
+      }
+
+      return API
+
+    }
+
+    ; Color List
+    colorList2 := colorList(self)
 
     ; Search Points
     button_SearchP1 := self.AddButton("x16 y59 w155 h22", "Search Area Point 1")

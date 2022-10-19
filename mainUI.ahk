@@ -181,19 +181,141 @@ mainUI() {
       return API
     }
 
+    ; Hotkey Group - Constructor
+    _hotkeyGroup(targetGui) {
+
+      ;; Constructors
+      _group(targetGui) {
+
+        ;; Properties
+        type_string := "HOTKEYS"
+        options := "x15 y138 w304 h142 +Left"
+
+        ;; Instantiate
+        targetGui.AddGroupBox(options, type_string)
+
+      }
+      
+      _exit(targetGui) {
+
+        ;; Properties
+        type_string := "Exit"
+        options := "x24 y254 w79 h23" 
+        
+        ;; Helpers
+        getText := formatText.Bind(type_string)
+        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+
+        ;; Instantiate
+        xself := targetGui.AddText(options, getText())
+
+        return { update : update }
+
+      }
+      
+      _pause(targetGui) {
+
+        ;; Properties
+        type_string := "Pause"
+        options := "x24 y229 w283 h23"
+
+        ;; Helpers
+        getText := formatText.Bind(type_string)
+        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+
+        ;; Instantiate
+        xself := targetGui.AddText(options, getText())
+
+
+        return { update : update }
+
+      }
+
+      _color(targetGui) {
+
+        ;; Properties
+        type_string := "Add Color"
+        options := "x24 y159 w281 h23"
+
+        ;; Helpers
+        getText := formatText.Bind(type_string)
+        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+
+        ;; Instantiate
+        xself := targetGui.AddText(options, getText())
+
+        return { update : update }
+
+      }
+
+      _searchPoint1(targetGui) {
+
+        ;; Properties
+        type_string := "Search Point 1"
+        options := "x24 y182 w278 h23"
+
+        ;; Helpers
+        getText := formatText.Bind(type_string)
+        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+
+        ;; Instantiate
+        xself := targetGui.AddText(options, getText())
+
+        return { update : update }
+
+      }
+
+      _searchPoint2(targetGui) {
+
+        ;; Properties
+        type_string := "Search Point 2"
+        options := "x24 y205 w280 h23"
+
+        ;; Helpers
+        getText := formatText.Bind(type_string)
+        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+
+        ;; Instantiate
+        xself := targetGui.AddText(options, getText())
+
+        return { update : update }
+
+      }
+
+      ;; Instantiate
+      group := _group(targetGui)
+      exit := _exit(targetGui)
+      pause := _pause(targetGui)
+      color := _color(targetGui)
+      searchPoint1 := _searchPoint1(targetGui)
+      searchPoint2 := _searchPoint2(targetGui)
+
+      ;; Methods
+      formatText(type_string, hotkey_string := "HOTKEY") {
+        string := type_string . " [ " . hotkey_string . " ]"
+        return string
+      }
+
+      API := { group : group 
+      , exit : exit
+      , pause : pause
+      , color : color
+      , searchPoint1 : searchPoint1
+      , searchPoint2 : searchPoint2
+      }
+
+      return API
+
+    }
+
     ; Color List - Instance
     colorList := _colorList(self)
 
     ; Search Points - Instance
     searchPoints := _searchPoints(self)
 
-    ; Hotkey Group
-    group_Hotkey := self.AddGroupBox("x15 y138 w304 h142 +Left", "HOTKEYS")
-    text_Exit := self.AddText("x24 y254 w79 h23", "Exit [ HOTKEY ]")
-    text_Pause := self.AddText("x24 y229 w283 h23", "Pause [ HOTKEY ]")
-    text_Color := self.AddText("x24 y159 w281 h23", "Add Color [ HOTKEY ]")
-    text_SearchP1 := self.AddText("x24 y182 w278 h23", "Search Point 1 [ HOTKEY ]")
-    text_SearchP2 := self.AddText("x24 y205 w280 h23", "Search Point 2 [ HOTKEY ]")
+    ; Hotkey Group - Instance
+    hotkeyGroup := _hotkeyGroup(self)
 
     ; Window
     self.OnEvent("Escape", self.destroy)

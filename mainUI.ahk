@@ -18,8 +18,8 @@ mainUI() {
 
   ; Controls
 
-    ; Color List
-    colorList(targetGui) {
+    ; Color List - Constructor
+    _colorList(targetGui) {
 
       storeData := Section_Entry("colorList")
 
@@ -144,8 +144,8 @@ mainUI() {
 
     }
 
-    ; Color List
-    colorList2 := colorList(self)
+    ; Color List - Instance
+    colorList := _colorList(self)
 
     ; Search Points
     button_SearchP1 := self.AddButton("x16 y59 w155 h22", "Search Area Point 1")

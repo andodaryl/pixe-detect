@@ -317,15 +317,22 @@ mainUI() {
     ; Hotkey Group - Instance
     hotkeyGroup := _hotkeyGroup(self)
 
-    ; Window
+  ; Event Handling
+
     self.OnEvent("Escape", self.destroy)
 
   ; Instantiation
 
-  self.Opt(opt)
-  self.Show("hide")
-  self.Move(dim.x, dim.y, dim.w, dim.h)
+    self.Opt(opt)
+    self.Show("hide")
+    self.Move(dim.x, dim.y, dim.w, dim.h)
 
-  return self 
+  API := { window : self
+    , colorList : colorList
+    , searchPoints : searchPoints
+    , hotkeyGroup : hotkeyGroup
+  }
+
+  return API
 
 }

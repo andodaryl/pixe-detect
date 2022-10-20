@@ -165,9 +165,13 @@ mainUI() {
       point2 := _point2(targetGui)
 
       ;; Methods
-      update(_closureFix_, COORD1, COORD2) {
-        point1.Text := getCoordString(COORD1)
-        point2.Text := getCoordString(COORD2)
+      update(_closureFix_, AREA_obj) {
+        if (AREA_obj.hasOwnProp("COORD1")) {
+          point1.Text := getCoordString(AREA_obj.COORD1)
+        }
+        if (AREA_obj.hasOwnProp("COORD2")) {
+          point2.Text := getCoordString(AREA_obj.COORD2)
+        }
       }
 
       getCoordString(COORD) {

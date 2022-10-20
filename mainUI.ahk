@@ -375,8 +375,6 @@ mainUI() {
 
   ; Event Handling
 
-    self.OnEvent("Escape", self.destroy)
-
   ; Instantiation
 
     self.Opt(opt)

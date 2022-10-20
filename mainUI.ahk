@@ -186,149 +186,171 @@ mainUI() {
     _hotkeyGroup(targetGui) {
 
       ;; Constructors
-      _group(targetGui) {
+        _group(targetGui) {
 
-        ;; Properties
-        type_string := "HOTKEYS"
-        options := "x15 y138 w304 h142 +Left"
+          ;; Properties
+            type_string := "HOTKEYS"
+            options := "x15 y138 w304 h142 +Left"
 
-        ;; Instantiate
-        targetGui.AddGroupBox(options, type_string)
+          ;; Instantiate
+            targetGui.AddGroupBox(options, type_string)
 
-      }
-      
-      _exit(targetGui) {
-
-        ;; Properties
-        type_string := "Exit"
-        options := "x24 y254 w79 h23" 
+        }
         
-        ;; Helpers
-        getText := formatText.Bind(type_string)
-        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+        _exit(targetGui) {
 
-        ;; Instantiate
-        xself := targetGui.AddText(options, getText())
+          ;; Properties
+            text_string := "Exit"
+            options := "x24 y254 w79 h23" 
 
-        return { update : update }
+          ;; Instantiate
+            instance := targetGui.AddText(options, getFullText(text_string))
 
-      }
-      
-      _pause(targetGui) {
+          ;; Methods
+            update(_closureFix_, hotkey_string) {
+              instance_update(instance, text_string, hotkey_string)
+            }
 
-        ;; Properties
-        type_string := "Pause"
-        options := "x24 y229 w283 h23"
+          ;; API
+            API := { update : update }
 
-        ;; Helpers
-        getText := formatText.Bind(type_string)
-        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+          return API
 
-        ;; Instantiate
-        xself := targetGui.AddText(options, getText())
+        }
+        
+        _pause(targetGui) {
 
+          ;; Properties
+            text_string := "Pause"
+            options := "x24 y229 w283 h23"
 
-        return { update : update }
+          ;; Instantiate
+            instance := targetGui.AddText(options, getFullText(text_string))
 
-      }
+          ;; Methods
+            update(_closureFix_, hotkey_string) {
+              instance_update(instance, text_string, hotkey_string)
+            }
 
-      _color(targetGui) {
+          ;; API
+            API := { update : update }
 
-        ;; Properties
-        type_string := "Add Color"
-        options := "x24 y159 w281 h23"
+          return API
 
-        ;; Helpers
-        getText := formatText.Bind(type_string)
-        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+        }
 
-        ;; Instantiate
-        xself := targetGui.AddText(options, getText())
+        _color(targetGui) {
 
-        return { update : update }
+          ;; Properties
+            text_string := "Add Color"
+            options := "x24 y159 w281 h23"
 
-      }
+          ;; Instantiate
+            instance := targetGui.AddText(options, getFullText(text_string))
 
-      _searchPoint1(targetGui) {
+          ;; Methods
+            update(_closureFix_, hotkey_string) {
+              instance_update(instance, text_string, hotkey_string)
+            }
 
-        ;; Properties
-        type_string := "Search Point 1"
-        options := "x24 y182 w278 h23"
+          ;; API
+            API := { update : update }
 
-        ;; Helpers
-        getText := formatText.Bind(type_string)
-        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+          return API
 
-        ;; Instantiate
-        xself := targetGui.AddText(options, getText())
+        }
 
-        return { update : update }
+        _searchPoint1(targetGui) {
 
-      }
+          ;; Properties
+            text_string := "Search Point 1"
+            options := "x24 y182 w278 h23"
 
-      _searchPoint2(targetGui) {
+          ;; Instantiate
+            instance := targetGui.AddText(options, getFullText(text_string))
+          
+          ;; Methods
+            update(_closureFix_, hotkey_string) {
+              instance_update(instance, text_string, hotkey_string)
+            }
 
-        ;; Properties
-        type_string := "Search Point 2"
-        options := "x24 y205 w280 h23"
+          ;; API
+            API := { update : update }
 
-        ;; Helpers
-        getText := formatText.Bind(type_string)
-        update := (_closureFix_, hotkey_string) => xself.Text := getText(hotkey_string)
+          return API
 
-        ;; Instantiate
-        xself := targetGui.AddText(options, getText())
+        }
 
-        return { update : update }
+        _searchPoint2(targetGui) {
 
-      }
+          ;; Properties
+            text_string := "Search Point 2"
+            options := "x24 y205 w280 h23"
+
+          ;; Instantiate
+            instance := targetGui.AddText(options, getFullText(text_string))
+
+          ;; Methods
+            update(_closureFix_, hotkey_string) {
+              instance_update(instance, text_string, hotkey_string)
+            }
+
+          ;; API
+            API := { update : update }
+
+          return API
+
+        }
 
       ;; Instantiate
-      group := _group(targetGui)
-      exit := _exit(targetGui)
-      pause := _pause(targetGui)
-      color := _color(targetGui)
-      searchPoint1 := _searchPoint1(targetGui)
-      searchPoint2 := _searchPoint2(targetGui)
+        group := _group(targetGui)
+        exit := _exit(targetGui)
+        pause := _pause(targetGui)
+        color := _color(targetGui)
+        searchPoint1 := _searchPoint1(targetGui)
+        searchPoint2 := _searchPoint2(targetGui)
 
       ;; Methods
-      formatText(type_string, hotkey_string := "HOTKEY") {
-        string := type_string . " [ " . hotkey_string . " ]"
-        return string
-      }
-
-      updateAll(_closureFix_, hotkeyMap_obj) {
-        
-        if (hotkeyMap_obj.hasOwnProp("searchPoint1")) {
-          searchPoint1.update(hotkeyMap_obj.searchPoint1)
+        formatHotkey(hotkey_string) {
+          hotkey_string_formatted := strReplace(hotkey_string, "&", "+")
+          hotkey_string_wrapped := "[ " . hotkey_string_formatted . " ]"
+          return hotkey_string_wrapped
         }
 
-        if (hotkeyMap_obj.hasOwnProp("searchPoint2")) {
-          searchPoint2.update(hotkeyMap_obj.searchPoint2)
-        }
-        
-        if (hotkeyMap_obj.hasOwnProp("exit")) {
-          exit.update(hotkeyMap_obj.exit)
+        getFullText(text_string, hotkey_string := "HOTKEY") {
+          return text_string . " " . formatHotkey(hotkey_string)
         }
 
-        if (hotkeyMap_obj.hasOwnProp("pause")) {
-          pause.update(hotkeyMap_obj.pause)
+        instance_update(control_instance, text_string, hotkey_string) {
+          control_instance.Text := getFullText(text_string, hotkey_string)
         }
 
-        if (hotkeyMap_obj.hasOwnProp("color")) {
-          color.update(hotkeyMap_obj.color)
-        }
-        
-      }
+        update(_closureFix_, hotkeyMap_obj) {
+          
+          if (hotkeyMap_obj.hasOwnProp("searchPoint1")) {
+            searchPoint1.update(hotkeyMap_obj.searchPoint1)
+          }
 
-      API := { group : group 
-      , exit : exit
-      , pause : pause
-      , color : color
-      , searchPoint1 : searchPoint1
-      , searchPoint2 : searchPoint2
-      , updateAll : updateAll
-      }
+          if (hotkeyMap_obj.hasOwnProp("searchPoint2")) {
+            searchPoint2.update(hotkeyMap_obj.searchPoint2)
+          }
+          
+          if (hotkeyMap_obj.hasOwnProp("exit")) {
+            exit.update(hotkeyMap_obj.exit)
+          }
+
+          if (hotkeyMap_obj.hasOwnProp("pause")) {
+            pause.update(hotkeyMap_obj.pause)
+          }
+
+          if (hotkeyMap_obj.hasOwnProp("color")) {
+            color.update(hotkeyMap_obj.color)
+          }
+          
+        }
+
+      ;; API
+        API := { update : update }
 
       return API
 

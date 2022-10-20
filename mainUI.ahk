@@ -297,12 +297,37 @@ mainUI() {
         return string
       }
 
+      updateAll(_closureFix_, hotkeyMap_obj) {
+        
+        if (hotkeyMap_obj.hasOwnProp("searchPoint1")) {
+          searchPoint1.update(hotkeyMap_obj.searchPoint1)
+        }
+
+        if (hotkeyMap_obj.hasOwnProp("searchPoint2")) {
+          searchPoint2.update(hotkeyMap_obj.searchPoint2)
+        }
+        
+        if (hotkeyMap_obj.hasOwnProp("exit")) {
+          exit.update(hotkeyMap_obj.exit)
+        }
+
+        if (hotkeyMap_obj.hasOwnProp("pause")) {
+          pause.update(hotkeyMap_obj.pause)
+        }
+
+        if (hotkeyMap_obj.hasOwnProp("color")) {
+          color.update(hotkeyMap_obj.color)
+        }
+        
+      }
+
       API := { group : group 
       , exit : exit
       , pause : pause
       , color : color
       , searchPoint1 : searchPoint1
       , searchPoint2 : searchPoint2
+      , updateAll : updateAll
       }
 
       return API

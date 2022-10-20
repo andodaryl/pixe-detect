@@ -40,12 +40,6 @@ class Section_Entry {
 }
 
 /*
-HOTKEYS
-*/
-
-hkQuit := "Esc"
-
-/*
 DIMENSIONS
 */
 
@@ -80,10 +74,6 @@ dimensions(dimension_Obj) {
 /*
 METHODS
 */
-
-hotkey(key, func) {
-  hotkey %key%, func
-}
 
 quit() {
   exitapp

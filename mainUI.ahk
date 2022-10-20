@@ -229,7 +229,7 @@ mainUI() {
         _pause(targetGui) {
 
           ;; Properties
-            text_string := "Pause"
+            text_string := "Start / Stop"
             options := "x24 y229 w283 h23"
 
           ;; Instantiate

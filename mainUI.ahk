@@ -83,7 +83,7 @@ mainUI() {
         getItemListArray(noTitle := false) {
 
           isEmpty := storeData.itemList == _null_ || storeData.itemList == ""
-          list_array := isEmpty ? defaultData.itemList : strSplit(storeData.itemList, ", ")
+          list_array := isEmpty ? defaultData.itemList.clone() : strSplit(storeData.itemList, ", ")
 
           if (noTitle) {
             indexFound := indexOf(list_array, getEmptyMessage())
@@ -131,9 +131,10 @@ mainUI() {
           list_array := getItemListArray(noTitle := true)
 
           if (indexOf(list_array, color) == 0) {
-            list_array.Push(color)
+            list_array.InsertAt(1, color)
             list_string := strJoin(list_array, ", ")
             storeData.itemList := list_string
+            update()
           }
 
         }

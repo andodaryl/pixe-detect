@@ -25,20 +25,35 @@
         , pixelVariation : 10 ;; 0 - 255
         , color_array : false
         , area_obj : false
-        , action : () => msgbox("Found!") ;; sample action
+        , action : (*) => msgbox("Found!") ;; sample action
       }
 
     ;; Methods
 
       activate(*) {
-        if(checkIsActive()) { return } ;; early exit if already active
-        properties.color_array := getColorArray() ;; get most up to date values from database
-        properties.area_obj := getArea()
-        properties.stopSignal := 0 ;; reset stopSignal
-        loop {
-          if (properties.stopSignal) { break } ;; break loop if stopSignal
-          searchArray()
-        }
+        ;; early exit if already active
+          if(checkIsActive()) {
+            return
+          }
+        ;; get most up to date values from database
+          properties.color_array := getColorArray()
+          properties.area_obj := getArea()
+        ;; early exit if not ready
+          if(!checkIsReady()) { 
+            msgbox("Not ready!")
+            return
+          }
+        ;; reset stopSignal
+          properties.stopSignal := 0
+        ;; initiate loop
+          loop {
+            ;; break loop early if stopSignal
+              if (properties.stopSignal) { 
+                break 
+              }
+            ;; main search behaviour
+              searchArray()
+          }
       }
 
       deactivate(*) {
@@ -46,7 +61,7 @@
       }
 
       searchArray() {
-        
+
         ;; properties
           COORD1 := properties.area_obj.COORD1
           COORD2 := properties.area_obj.COORD2
@@ -55,8 +70,12 @@
 
         ;; iterate search behaviour per color in array
           for _, color in color_array {
-            pixelSearch(&xFound, &yFound, COORD1.x, COORD1.y, COORD2.x, COORD2.y, color, variation)
-            if (xFound || yFound) { return properties.action() } ;; trigger action if found & exit
+            ;; main pixel search
+              pixelSearch(&xFound, &yFound, COORD1.x, COORD1.y, COORD2.x, COORD2.y, color, variation)
+            ;; trigger action if found & exit
+              if (xFound || yFound) { 
+                return properties.action() 
+              }
           }
 
       }
@@ -65,15 +84,32 @@
         return properties.stopSignal == 0
       }
 
+      checkIsReady() {
+
+          COORD1 := properties.area_obj.hasOwnProp("COORD1") ? properties.area_obj.COORD1 : false
+          COORD2 := properties.area_obj.hasOwnProp("COORD2") ? properties.area_obj.COORD2 : false
+
+          area_obj := isInteger(COORD1.x) && isInteger(COORD1.y) && isInteger(COORD2.x) && isInteger(COORD2.y)
+          color_array := properties.color_array is Array && properties.color_array.length > 0
+
+          return area_obj && color_array
+
+      }
+
       getColorArray() {
 
         ;; lists from database
-          list_array := strSplit(storeData.ColorList.itemList, ", ")
-          disabledItems_array := strSplit(storeData.ColorList.disabledItems, ", ")
+          list_array := storeData.ColorList.itemList == _null_ ? [] : strSplit(storeData.ColorList.itemList, ", ")
+          disabledItems_array := storeData.ColorList.disabledItems == _null_ ? [] : strSplit(storeData.ColorList.disabledItems, ", ")
 
         ;; remove disabled items from list_array
-          for _, color in disabledItems_array {
-            list_array.removeAt(indexOf(list_array, color))
+          if (list_array.length > 0 & disabledItems_array.length > 0) {
+            for _, color in disabledItems_array {
+              indexFound := indexOf(list_array, color)
+              if (indexFound) {
+                list_array.removeAt(indexFound)
+              }
+            }
           }
 
         return list_array

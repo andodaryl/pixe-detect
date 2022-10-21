@@ -169,6 +169,7 @@ mainUI() {
       ;; Instances
         point1 := _point1(targetGui)
         point2 := _point2(targetGui)
+        update(false, getArea())
 
       ;; Methods
         update(_closureFix_, area_obj) {
@@ -196,6 +197,21 @@ mainUI() {
             storeData.y2 := area_obj.COORD2.y
           }
           update(false, area_obj)
+        }
+
+        getArea() {
+
+          x1 := storeData.x1 == _null_ ? false : storeData.x1
+          y1 := storeData.y1 == _null_ ? false : storeData.y1
+          x2 := storeData.x2 == _null_ ? false : storeData.x2
+          y2 := storeData.y2 == _null_ ? false : storeData.y2
+
+          area_obj := { COORD1: { x: x1, y: y1 }, COORD2: { x: x2, y: y2 } }
+
+          return x1 && y1 && x2 && y2 ? area_obj : false
+
+        }
+
         }
       
       ;; API

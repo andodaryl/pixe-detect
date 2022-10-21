@@ -7,6 +7,8 @@ AHK v2.0-beta.11
 #include ./searchAPI.ahk
 
 ;; Properties
+  coordmode("mouse", "screen")
+  coordmode("pixel", "screen")
   hotkeyMap := { color : "LControl & 1"
     , searchPoint1 : "LControl & 2"
     , searchPoint2 : "LControl & 3"

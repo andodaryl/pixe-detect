@@ -30,7 +30,15 @@ AHK v2.0-beta.11
   hotkey(hotkeyMap.searchPoint2, (*) => UI.searchPoints.setPoints({COORD2: getCoordinates()}))
 
   #maxthreadsperhotkey 2
-  hotkey(hotkeyMap.toggle, (*) => search_instance.checkIsActive() ? search_instance.deactivate() : search_instance.activate())
+  hotkey(hotkeyMap.toggle, (*) => search_instance.checkIsActive() ?  deactivationAction() : activationAction() )
+  deactivationAction() {
+    UI.indicator.isInactive()
+    search_instance.deactivate()
+  }
+  activationAction() {
+    UI.indicator.isActive()
+    search_instance.activate()
+  }
 
   hotkey(hotkeyMap.exit, (*) => quit())
 

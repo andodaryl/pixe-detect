@@ -173,12 +173,17 @@ mainUI() {
 
       ;; Methods
         update(_closureFix_, area_obj) {
-          if (area_obj.hasOwnProp("COORD1")) {
-            point1.Text := getCoordString(area_obj.COORD1)
-          }
-          if (area_obj.hasOwnProp("COORD2")) {
-            point2.Text := getCoordString(area_obj.COORD2)
-          }
+          ;; early exit if not an object
+            if (Type(area_obj) !== "Object") {
+              return
+            }
+          ;; update coordinates
+            if (area_obj.hasOwnProp("COORD1")) {
+              point1.Text := getCoordString(area_obj.COORD1)
+            }
+            if (area_obj.hasOwnProp("COORD2")) {
+              point2.Text := getCoordString(area_obj.COORD2)
+            }
         }
 
         getCoordString(COORD) {

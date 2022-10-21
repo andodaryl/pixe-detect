@@ -168,12 +168,12 @@ mainUI() {
         point2 := _point2(targetGui)
 
       ;; Methods
-        update(_closureFix_, AREA_obj) {
-          if (AREA_obj.hasOwnProp("COORD1")) {
-            point1.Text := getCoordString(AREA_obj.COORD1)
+        update(_closureFix_, area_obj) {
+          if (area_obj.hasOwnProp("COORD1")) {
+            point1.Text := getCoordString(area_obj.COORD1)
           }
-          if (AREA_obj.hasOwnProp("COORD2")) {
-            point2.Text := getCoordString(AREA_obj.COORD2)
+          if (area_obj.hasOwnProp("COORD2")) {
+            point2.Text := getCoordString(area_obj.COORD2)
           }
         }
 

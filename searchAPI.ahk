@@ -50,6 +50,7 @@
         ;; properties
           COORD1 := properties.area_obj.COORD1
           COORD2 := properties.area_obj.COORD2
+          color_array := properties.color_array
           variation := properties.pixelVariation
 
         ;; iterate search behaviour per color in array

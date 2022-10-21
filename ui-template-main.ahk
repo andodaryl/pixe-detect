@@ -242,7 +242,7 @@ mainUI() {
 
         }
         
-        _pause(targetGui) {
+        _toggle(targetGui) {
 
           ;; Properties
             text_string := "Start / Stop"
@@ -329,7 +329,7 @@ mainUI() {
       ;; Instantiate
         group := _group(targetGui)
         exit := _exit(targetGui)
-        pause := _pause(targetGui)
+        toggle := _toggle(targetGui)
         color := _color(targetGui)
         searchPoint1 := _searchPoint1(targetGui)
         searchPoint2 := _searchPoint2(targetGui)
@@ -363,8 +363,8 @@ mainUI() {
             exit.update(hotkeyMap_obj.exit)
           }
 
-          if (hotkeyMap_obj.hasOwnProp("pause")) {
-            pause.update(hotkeyMap_obj.pause)
+          if (hotkeyMap_obj.hasOwnProp("toggle")) {
+            toggle.update(hotkeyMap_obj.toggle)
           }
 
           if (hotkeyMap_obj.hasOwnProp("color")) {

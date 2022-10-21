@@ -4,6 +4,7 @@ AHK v2.0-beta.11
 
 #include ./corelib.ahk
 #include ./ui-template-main.ahk
+#include ./searchAPI.ahk
 
 ;; Properties
   hotkeyMap := { color : "LControl & 1"
@@ -17,10 +18,17 @@ AHK v2.0-beta.11
   UI := mainUI()
   UI.window.show()
   UI.hotkeyGroup.update(hotkeyMap)
+  search_instance := search()
 
 ;; Hotkeys
-  hotkey(hotkeyMap.color, (*) => "Callback function")
-  hotkey(hotkeyMap.searchPoint1, (*) => "Callback function")
-  hotkey(hotkeyMap.searchPoint2, (*) => "Callback function")
+  hotkey(hotkeyMap.color, (*) => UI.colorList.addColor(getColor()))
+
+  hotkey(hotkeyMap.searchPoint1, (*) => UI.searchPoints.setPoints({COORD1: getCoordinates()}))
+
+  hotkey(hotkeyMap.searchPoint2, (*) => UI.searchPoints.setPoints({COORD2: getCoordinates()}))
+
+  #maxthreadsperhotkey 2
+  hotkey(hotkeyMap.toggle, (*) => search_instance.checkIsActive() ? search_instance.deactivate() : search_instance.activate())
+
   hotkey(hotkeyMap.exit, (*) => quit())
 

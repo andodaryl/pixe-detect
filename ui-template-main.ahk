@@ -22,7 +22,7 @@ mainUI() {
     _colorList(targetGui) {
 
       ;; Properties
-        storeData := Section_Entry("colorList")
+        storeData := Section_Entry("ColorList")
 
         defaultData := { itemList : ["—— ( Please add a color ) ——"]
         , disabledItems : []
@@ -152,7 +152,7 @@ mainUI() {
     _searchPoints(targetGui) {
 
       ;; Properties
-        storeData := Section_Entry("searchPoints")
+        storeData := Section_Entry("SearchPoints")
 
       ;; Constructors
         _point1(targetGui) {

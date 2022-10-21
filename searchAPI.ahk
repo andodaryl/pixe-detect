@@ -73,7 +73,7 @@
             ;; main pixel search
               pixelSearch(&xFound, &yFound, COORD1.x, COORD1.y, COORD2.x, COORD2.y, color, variation)
             ;; trigger action if found & exit
-              if (xFound || yFound) { 
+              if (xFound && yFound) { 
                 return properties.action() 
               }
           }
@@ -103,7 +103,7 @@
           disabledItems_array := storeData.ColorList.disabledItems == _null_ ? [] : strSplit(storeData.ColorList.disabledItems, ", ")
 
         ;; remove disabled items from list_array
-          if (list_array.length > 0 & disabledItems_array.length > 0) {
+          if (list_array.length > 0 && disabledItems_array.length > 0) {
             for _, color in disabledItems_array {
               indexFound := indexOf(list_array, color)
               if (indexFound) {

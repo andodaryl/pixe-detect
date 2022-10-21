@@ -151,6 +151,9 @@ mainUI() {
     ; Search Points - Constructor
     _searchPoints(targetGui) {
 
+      ;; Properties
+        storeData := Section_Entry("searchPoints")
+
       ;; Constructors
         _point1(targetGui) {
           _button := targetGui.AddButton("x16 y59 w155 h22", "Search Area Point 1")
@@ -182,9 +185,22 @@ mainUI() {
             return "(" . COORD.X . "," . COORD.Y . ")"
           }
         }
+
+        setPoints(_closureFix_, area_obj) {
+          if (area_obj.hasOwnProp("COORD1")) {
+            storeData.x1 := area_obj.COORD1.x
+            storeData.y1 := area_obj.COORD1.y
+          }
+          if (area_obj.hasOwnProp("COORD2")) {
+            storeData.x2 := area_obj.COORD2.x
+            storeData.y2 := area_obj.COORD2.y
+          }
+          update(false, area_obj)
+        }
       
       ;; API
         API := {  update : update
+          , setPoints : setPoints
         }
 
       return API

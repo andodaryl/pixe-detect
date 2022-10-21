@@ -394,6 +394,34 @@ mainUI() {
 
     }
 
+    ; Active Indicator - Constructor
+    _indicator(targetGui) {
+
+          ;; Properties
+            text_string := "| Stopped |"
+            options := "x269 y283 w79 h23" 
+
+          ;; Instantiate
+            instance := targetGui.AddText(options, text_string)
+
+          ;; Methods
+            isActive(*) {
+              instance.Text := "| Active |"
+            }
+
+            isInactive(*) {
+              instance.Text := "| Stopped |"
+            }
+
+          ;; API
+            API := { isActive : isActive
+              , isInactive : isInactive
+            }
+
+          return API
+
+    }
+
     ; Color List - Instance
     colorList := _colorList(self)
 
@@ -402,6 +430,9 @@ mainUI() {
 
     ; Hotkey Group - Instance
     hotkeyGroup := _hotkeyGroup(self)
+
+    ; Indicator - Instance
+    indicator := _indicator(self)
 
   ; Event Handling
 
@@ -417,6 +448,7 @@ mainUI() {
       , colorList : colorList
       , searchPoints : searchPoints
       , hotkeyGroup : hotkeyGroup
+      , indicator : indicator
     }
 
   return API

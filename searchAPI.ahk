@@ -66,7 +66,18 @@
       }
 
       getColorArray() {
-        return strSplit(storeData.ColorList.activeItems, ", ")
+
+        ;; lists from database
+          list_array := strSplit(storeData.ColorList.itemList, ", ")
+          disabledItems_array := strSplit(storeData.ColorList.disabledItems, ", ")
+
+        ;; remove disabled items from list_array
+          for _, color in disabledItems_array {
+            list_array.removeAt(indexOf(list_array, color))
+          }
+
+        return list_array
+
       }
 
       getArea() {
